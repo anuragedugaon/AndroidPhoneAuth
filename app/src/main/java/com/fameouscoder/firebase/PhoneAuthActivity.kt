@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
-import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
@@ -21,6 +21,8 @@ class PhoneAuthActivity : AppCompatActivity() {
     lateinit var phoneNumber: String
     private lateinit var auth: FirebaseAuth
     private lateinit var vId: String
+    private lateinit var reSendToken: String
+    private lateinit var resendOtp: TextView
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +32,13 @@ class PhoneAuthActivity : AppCompatActivity() {
         var phone = findViewById<EditText>(R.id.phone_number)
         var ccp = findViewById<CountryCodePicker>(R.id.ccp)
         var button = findViewById<Button>(R.id.sendOtp)
+        resendOtp=findViewById(R.id.resendOtp)
+
+
+        resendOtp.setOnClickListener {
+
+        }
+
 
         button.setOnClickListener {
             ccp.registerCarrierNumberEditText(phone)
@@ -72,13 +81,18 @@ class PhoneAuthActivity : AppCompatActivity() {
             .setTimeout(30L, TimeUnit.SECONDS)
             .setActivity(this)
             .setCallbacks(object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+                override fun onCodeAutoRetrievalTimeOut(p0: String) {
 
+                }
                 override fun onCodeSent(
                     verificationId: String,
                     forceResendingToken: PhoneAuthProvider.ForceResendingToken
                 ) {
                     vId = verificationId
+
+                    reSendToken=forceResendingToken.toString()
                     Toast.makeText(this@PhoneAuthActivity, "send $verificationId", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@PhoneAuthActivity, "send $forceResendingToken", Toast.LENGTH_SHORT).show()
 
                 }
 

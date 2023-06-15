@@ -53,4 +53,17 @@
         android:textColorHint="@color/white"
         />
 
+    <TextView
+        android:id="@+id/resendOtp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/verifyOtp"
+        android:layout_alignEnd="@id/verifyOtp"
+        android:layout_alignParentStart="false"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="-7dp"
+        android:text="resend otp"
+        android:textColor="@color/black"
+        android:textSize="30dp" />
+
 </RelativeLayout>
